@@ -200,8 +200,13 @@ jobs:
                 ln -s "${GITHUB_WORKSPACE}/users/ardux" /qmk_firmware/users/ardux;
                 echo "Created users/ardux symlink";
             fi
-            /usr/bin/python3 -m pip install -r /qmk_firmware/requirements.txt;
+            python3 -m venv /tmp/qmk-venv
+            . /tmp/qmk-venv/bin/activate
+            python -m pip install --upgrade pip
+            python -m pip install -r /qmk_firmware/requirements.txt
+
             qmk setup -y;
+
       - name: QMK Clean
         run: qmk clean
       - name: QMK Build
